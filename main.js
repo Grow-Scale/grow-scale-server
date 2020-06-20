@@ -16,7 +16,7 @@ app.get("/",function(req,res)
 
 app.get("/",function(req,res)
 {
-    // Use this route for all the front end tasks.
+    // Use this route for all the Back end tasks.
 	res.send("Use This Route For Back End Works");
 });
 
