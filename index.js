@@ -27,6 +27,37 @@ app.get("/",function(req,res)
 	res.send("Use This Route For Front End Works");
 });
 
+app.get("/addtodatabase",function(req,res){
+	res.render("addtodatabase",{witdata:null});
+});
+
+app.get("/getintent",function(req,res){
+	//console.log(req.query.probstatement)
+	client.message(req.query.probstatement,{})
+		.then((data)=>{
+			res.render("addtodatabase",{witdata:data});
+		});
+})
+
+app.get("/adddata",function(req,res){
+	// no_user means number of users complainted about the problem
+	console.log(req.query.intent)
+	db.problems.find( { name:req.query.intent }, function(err,data){
+		console.log(data);
+		if(data.length>0){
+			db.problems.update({name:req.query.intent},{ $inc: { no_users : 1}},function(err,data){
+				if(err) throw err;
+				res.render("addtodatabase",{witdata:null});
+			})
+		}else{
+			db.problems.insertOne( {name:req.query.intent , no_users:1}, function(err,data){
+				if (err) throw err
+				res.render("addtodatabase",{witdata:null});
+			})
+		}
+})
+})
+
 app.get("/getAllTopProblems",function(req,res){
 	// getAllTopProblems is used to get all the problems to be displayed at the beginning of conversation
 	// setting up the threshold to be 2
@@ -37,8 +68,8 @@ app.get("/getAllTopProblems",function(req,res){
 			for(var i = 0; i<data.length;i++){
 				prob.push(data[i].name);
 			}
-			res.send(data)
-		} else {
+			res.send(prob)
+		}else{
 			res.send("Happy to say that there are 0 problems less than threshold.");
 		}
 	})
@@ -47,8 +78,12 @@ app.get("/getAllTopProblems",function(req,res){
 app.get("/userProblem/:is_exists/:name",function(req,res){
 	// userProblem is used to increment the number of users having the problem
 	/* Querys
-	   is_exists (boolean) : True if the user selects any button. False id the user gives his own problem discription
-	   name (string) : The Problem They are facing */
+	   iclient.message(req.params.name,{})
+		.then((data)=>{s_exists (boolean) : True if the user selects any button. False id the user gives his own problem discription
+	   name (string) : The Problem Thedb.problems.insertOne( {name:needed_data.body , no_users:1}, function(err,data){
+						if (err) throw err
+						res.send("Successfully notted down the problem "+needed_data.body);
+					})y are facing */
 	if(req.params.is_exists == "true"){
 		// If the user is facing a problem from the given problems in form of buttons.
 		db.problems.update({name:req.params.name},{ $inc: { no_users : 1}},function(err,data){
@@ -64,7 +99,7 @@ app.get("/userProblem/:is_exists/:name",function(req,res){
 				var needed_data = Object.values(data.entities)[0][0]
 				// the threshold is set to 80 %
 				if(needed_data.confidence>0.80){
-					//res.send(needed_data.body+" with a confidence of "+needed_data.confidence);
+					// no_user means number of users complainted about the problem
 					db.problems.insertOne( {name:needed_data.body , no_users:1}, function(err,data){
 						if (err) throw err
 						res.send("Successfully notted down the problem "+needed_data.body);
