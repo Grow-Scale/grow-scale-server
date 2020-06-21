@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Grow-Scale/grow-scale-server/issues"
   },
-  "homepage": "https://github.com/Grow-Scale/grow-scale-server#readme"
+  "homepage": "https://github.com/Grow-Scale/grow-scale-server#readme",
+  "dependencies": {
+    "node-wit": "^6.0.0"
+  }
 }
