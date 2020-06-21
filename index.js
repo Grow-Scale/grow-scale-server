@@ -37,7 +37,7 @@ app.get("/getAllTopProblems",function(req,res){
 				prob.push(data[i].name);
 			}
 			res.send(data)
-		}else{
+		} else {
 			res.send("Happy to say that there are 0 problems less than threshold.");
 		}
 	})
@@ -81,5 +81,5 @@ app.get("/userProblem/:is_exists/:name",function(req,res){
 
 
 app.listen(4000,function(){
-	console.log("SERVER STARTED SUCCESSFULLY................")
+	console.log("Server started at at port no. 4000")
 })
