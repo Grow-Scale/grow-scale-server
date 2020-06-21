@@ -28,7 +28,7 @@ app.get("/",function(req,res)
 
 app.get("/getAllTopProblems",function(req,res){
 	// getAllTopProblems is used to get all the problems to be displayed at the beginning of conversation
-	// setting up the threshold to be 4
+	// setting up the threshold to be 2
 	db.problems.find( { "no_users": { $gt: 2 } }, function(err,data){
 		if(err) throw err
 		var prob=[]
