@@ -60,8 +60,8 @@ app.get("/adddata",function(req,res){
 
 app.get("/getAllTopProblems",function(req,res){
 	// getAllTopProblems is used to get all the problems to be displayed at the beginning of conversation
-	// setting up the threshold to be 2
-	db.problems.find( { "no_users": { $gt: 2 } }, function(err,data){
+	// setting up the threshold to be 4
+	db.problems.find( { "no_users": { $gt: 4 } }, function(err,data){
 		if(err) throw err
 		var prob=[]
 		if(data.length>0){
@@ -78,12 +78,8 @@ app.get("/getAllTopProblems",function(req,res){
 app.get("/userProblem/:is_exists/:name",function(req,res){
 	// userProblem is used to increment the number of users having the problem
 	/* Querys
-	   iclient.message(req.params.name,{})
-		.then((data)=>{s_exists (boolean) : True if the user selects any button. False id the user gives his own problem discription
-	   name (string) : The Problem Thedb.problems.insertOne( {name:needed_data.body , no_users:1}, function(err,data){
-						if (err) throw err
-						res.send("Successfully notted down the problem "+needed_data.body);
-					})y are facing */
+	   is_exists (boolean) : True if the user selects any button. False id the user gives his own problem discription
+	   name (string) : The Problem They are facing */
 	if(req.params.is_exists == "true"){
 		// If the user is facing a problem from the given problems in form of buttons.
 		db.problems.update({name:req.params.name},{ $inc: { no_users : 1}},function(err,data){
