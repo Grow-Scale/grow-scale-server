@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add To Database</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>  
+    
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Hello</h4>
+        <p>This page is to add the entered information to the database for facebook hackathon 2020.</p>
+        <hr>
+        <p class="mb-0">Add any statements and get the intent using wit.ai and add those intents to the database.</p>
+    </div><br>
+
+    <div class="row">
+        <div class="col-md-1 col-sm-1 col-1"></div>
+        <div class="col-md-10 col-sm-10 col-10">
+            <form action="/getintent" method="GET">
+                <div class="form-group">
+                  <label for="exampleInputEmail1" class="lead">Add the comment from the mintra webpage</label>
+                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="probstatement" required>
+                  <small id="emailHelp" class="form-text text-muted">click submit to get the intent of the given comment</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="col-md-1 col-sm-1 col-1"></div>
+    </div>
+    <br><br>
+    <% if(witdata!=null){ %>
+    <div class="row">
+        <div class="col-md-1 col-sm-1 col-1"></div>
+        <div class="col-md-10 col-sm-10 col-10">
+            <form action="/adddata" method="GET">
+                    <div class="form-group">
+                        <label for="exampleInputText2" class="lead">The Generated Intent for <span class="badge badge-primary"><%= witdata.text %></span></label>
+                        <input type="text" class="form-control" id="exampleInputText2" required name="intent"
+                        value= <%- JSON.stringify(witdata.intents[0].name) %> > 
+                    </div>     
+                <button type="submit" class="btn btn-primary">Add</button>
+              </form>
+        </div>
+        <div class="col-md-1 col-sm-1 col-1"></div>
+    </div>      <% }%>     
+
+
+
+
+
+
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
