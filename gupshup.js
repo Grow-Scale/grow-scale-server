@@ -1,8 +1,9 @@
 /** This is a sample code for your bot**/
 function MessageHandler(context, event) {
-   
-   var general_problems = ["wrong product","pricing issue","refund issue"]; 
-    if(event.message.toLowerCase() == "hi"){
+   //context.sendResponse("Hello");
+   //context.sendResponse("Hello vk");
+   var general_problems = ["wrong product","customer care","refund issue"]; 
+    if(event.message.toLowerCase() == "hi" || event.message.toLowerCase() == "get started" || event.message.toLowerCase() == "hello"){
         context.simplehttp.makeGet("https://grow-scale.herokuapp.com/getAllTopProblems");
     }
     else if(general_problems.indexOf(event.message)!=-1){
@@ -34,7 +35,7 @@ function HttpResponseHandler(context, event) {
     
         var question = {
                        "type": "survey",
-                         "question": "please select your problem from the options given below.\nIf the problem you you are facing is not one of the options, Then please describe your problem in about 100 words.\nThank You",
+                         "question": "Please check whether your issue falls under any of the below problems. If not describe in not more than 75 words.\nThank You",
                          "msgid": "3er45",
                          "options": [
                                  comp0,
@@ -47,9 +48,9 @@ function HttpResponseHandler(context, event) {
   else if(event.getresp.includes("Updated Successfully")){
        context.sendResponse("Thank You . We have successfully noted down your problem");
   }else if(event.getresp.includes("could not identify the problem")){
-       context.sendResponse("sorry, I "+event.getresp+".\nCan you please specify more about your problem.\nThank you.");
-  }else if(event.getresp.includes("Successfully notted down the problem")){
-      context.sendResponse("We Have Successfully notted down the problem.\nThank You sir/madam, we would definetly look into this issue and check that you does not face this issue further..")
+       context.sendResponse("Thank You . We have successfully noted down your problem.");
+  }else{
+      context.sendResponse("Thank You . We have successfully noted down your problem.");
   }
 
 }
